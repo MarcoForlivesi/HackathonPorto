@@ -7,8 +7,8 @@ public class TabContainer : MonoBehaviour
 {
     [SerializeField] private List<Button> tabButton;
     [SerializeField] private List<Transform> tabContent;
-    [SerializeField] private Color neutral;
-    [SerializeField] private Color selected;
+    [SerializeField] private Sprite neutralImage;
+    [SerializeField] private Sprite selectedImaage;
 
     private List<Image> imageTabButtons;
 
@@ -34,11 +34,11 @@ public class TabContainer : MonoBehaviour
         {
             if (i == index)
             {
-                imageTabButtons[i].color = selected;
+                imageTabButtons[i].sprite = selectedImaage;
             }
             else
             {
-                imageTabButtons[i].color = neutral;
+                imageTabButtons[i].sprite = neutralImage;
             }
             
             tabContent[i].gameObject.SetActive(i == index);
