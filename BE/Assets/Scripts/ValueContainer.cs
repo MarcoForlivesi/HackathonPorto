@@ -80,7 +80,7 @@ public class ValueContainer : MonoBehaviour
         for (int i = 0; i < valueList.Count; i++)
         {
             ReplyValueButton replyValueC = valueList[i];
-            bool active = replyValueC.ReplyValue.ToString() == MainLogic.Instance.Data.ReplyValue;
+            bool active = replyValueC.ReplyValue.ToString() == MainLogic.Instance.Data.replyValue;
 
             replyValueC.SetActive(active);
 

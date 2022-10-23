@@ -8,32 +8,45 @@ public class PropsController : MonoBehaviour
 {
     enum PropType { None, Glass, Hat }
 
-    [SerializeField] private Transform[] props;
+    [SerializeField] private Transform[] rewards;
+    [SerializeField] private string[] reward_keys;
     [SerializeField] private PropType currentPropType = PropType.None;
     [SerializeField] private PropType newPropType;
     [SerializeField] private Transform currentProp;
-    [SerializeField] private float despawn_time = 0.2f;
-    [SerializeField] private float spawn_time = 0.5f;
+    Dictionary<string, Transform> rewardMap;
 
-    public void PropsSelection(int id)
+    private void Awake()
     {
-        if(id == 4)
+        rewardMap = new Dictionary<string, Transform>();
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < reward_keys.Length; i++)
+        {
+            rewardMap.Add(reward_keys[i], rewards[i]);
+        }
+    }
+
+    public void RecognitionDataDispatcher(RewardRecognitionData data)
+    {
+        if (data.reward == "dance")
         {
             DanceAnimation();
-            return; 
+            return;
         }
-        newPropType = GetPropTypeById(id);
+        newPropType = GetPropTypeByName(data.reward);
         if (newPropType == currentPropType && currentPropType != PropType.None)
         {
-            DespawnProp(currentProp); 
+            DespawnProp(currentProp);
         }
-        currentPropType = newPropType; 
-        SpawnProp(props[id]); 
+        currentPropType = newPropType;
+        SpawnProp(rewardMap[data.reward]);
     }
 
     private void DanceAnimation()
     {
-        GetComponent<Animator>().SetTrigger("Dance"); 
+        GetComponent<Animator>().SetTrigger("Dance");
     }
 
     private void DespawnProp(Transform currentProp)
@@ -44,17 +57,17 @@ public class PropsController : MonoBehaviour
     private void SpawnProp(Transform prop)
     {
         prop.gameObject.SetActive(true);
-        currentProp = prop; 
+        currentProp = prop;
 
     }
 
-    private PropType GetPropTypeById(int id)
+    private PropType GetPropTypeByName(string name)
     {
-        if (id == 0 || id == 1)
+        if (name == "black_glass" || name == "3d_glass")
         {
             return PropType.Glass;
         }
-        if (id == 2 || id == 3)
+        if (name == "red_hat" || name == "brown_hat")
         {
             return PropType.Hat;
         }

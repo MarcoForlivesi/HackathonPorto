@@ -10,8 +10,7 @@ public class RewardButton : MonoBehaviour
 
     [SerializeField] private Button button;
     [SerializeField] private Image border;
-
-    private string rewardName;
+    [SerializeField] private string rewardName;
 
     public void Start()
     {

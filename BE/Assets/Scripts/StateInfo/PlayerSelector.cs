@@ -17,7 +17,7 @@ public class PlayerSelector : MonoBehaviour
         dropdown.onValueChanged.AddListener(PlayerChanged);
 
         string playerName = dropdown.options[dropdown.value].text;
-        MainLogic.Instance.Data.PlayerName = playerName;
+        MainLogic.Instance.Data.playerName = playerName;
     }
 
     private void PlayerChanged(int index)
