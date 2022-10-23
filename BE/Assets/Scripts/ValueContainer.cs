@@ -11,7 +11,7 @@ public class ValueContainer : MonoBehaviour
     [SerializeField] private Button next;
 
     [SerializeField] private int visibleValues = 3;
-    [SerializeField] private List<Button> valueList;
+    [SerializeField] private List<ReplyValueButton> valueList;
 
     private int position = 0;
 
@@ -19,6 +19,15 @@ public class ValueContainer : MonoBehaviour
     void Start()
     {
         UpdateButtons();
+
+        for (int i = 0; i < valueList.Count; i++)
+        {
+            ReplyValueButton valueButton = valueList[i];
+            int c = i;
+            valueButton.Button.onClick.AddListener(() => OnValueSelection(c));
+            valueButton.SetActive(false);
+        }
+
         back.onClick.AddListener(Back);
         next.onClick.AddListener(Next);
     }
@@ -60,6 +69,21 @@ public class ValueContainer : MonoBehaviour
         {
             bool visible = i >= position && i < position + visibleValues;
             valueList[i].gameObject.SetActive(visible);
+        }
+    }
+
+    private void OnValueSelection(int index)
+    {
+        ReplyValues replyValue = valueList[index].ReplyValue;
+        MainLogic.Instance.SetReplyValue(replyValue.ToString());
+
+        for (int i = 0; i < valueList.Count; i++)
+        {
+            ReplyValueButton replyValueC = valueList[i];
+            bool active = replyValueC.ReplyValue.ToString() == MainLogic.Instance.Data.ReplyValue;
+
+            replyValueC.SetActive(active);
+
         }
     }
 }

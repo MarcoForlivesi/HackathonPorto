@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum RewardEnum
+public enum ReplyValues
 {
-    Reward1,
-    Reward2,
-    Reward3
+    Customer,
+    Innovation,
+    Teamwork,
+    Reliability,
+    Excellence
 }
